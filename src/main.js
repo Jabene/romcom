@@ -16,20 +16,9 @@ var viewSavedButton = document.querySelector('.view-saved-button');
 var newCoverButton = document.querySelector('.make-new-button');
 var generateCoverButton = document.querySelector('.create-new-book-button');
 
-var savedCovers = [ new Cover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")];
-var currentCover = {
-  cover: covers[getRandomIndex(covers)],
-  title: titles[getRandomIndex(titles)],
-  tagline1: descriptors[getRandomIndex(descriptors)],
-  tagline2: descriptors[getRandomIndex(descriptors)],
-};
+var savedCovers = [];
 
-
-
-coverImage.src = currentCover.cover;
-coverTitle.innerText = currentCover.title;
-coverTagline1.innerText = currentCover.tagline1;
-coverTagline2.innerText = currentCover.tagline2;
+randomCover();
 
 
 
@@ -74,9 +63,8 @@ function viewSavedCover() {
   document.querySelector(".saved-covers-section").innerHTML = "";
 
   for (var i=0; i<savedCovers.length; i++) {
-    if (i>0) {
       document.querySelector(".saved-covers-section").innerHTML +=`
-        <span class = "mini-cover" id ="${i}" ondblclick="deleteCover(this.id)"">
+        <span class = "mini-cover" id ="${savedCovers[i].id}" ondblclick="deleteCover(this.id)"">
           <img class = "cover-image" src=${savedCovers[i].cover}>
           <h2 class = "cover-title ">${savedCovers[i].title}</h2>
           <h3 class = "tagline">A tale of <span class="tagline-1">${savedCovers[i].tagline1}</span> and <span class="tagline-2">${savedCovers[i].tagline2}</span></h3>
@@ -84,7 +72,6 @@ function viewSavedCover() {
           <img class = "overlay" src="./assets/overlay.png">
         </span>
         `;
-      }
   }
   randomCover();
 }
@@ -118,17 +105,19 @@ function generateCustomCover() {
 }
 
 function saveCover() {
-  for (var i=0; i<savedCovers.length; i++) {
-    if (savedCovers.indexOf(currentCover) === -1) {
+    if (savedCovers.includes()=== false) {
       savedCovers.push(currentCover);
     }
-  }
 }
 
 function deleteCover(clickedId) {
   var selectedCover = document.getElementById(clickedId);
-   selectedCover.remove();
-   savedCovers.splice(clickedId, 1);
+    selectedCover.remove();
+  for (var i = 0; i < savedCovers.length; i++) {
+    if (savedCovers[i].id == clickedId) {
+      savedCovers.splice(i, 1);
+    }
+  }
 }
 
 function getRandomIndex(array) {
