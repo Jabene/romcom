@@ -105,7 +105,7 @@ function generateCustomCover() {
 }
 
 function saveCover() {
-    if (savedCovers.includes()=== false) {
+    if (savedCovers.includes(currentCover)=== false) {
       savedCovers.push(currentCover);
     }
 }
